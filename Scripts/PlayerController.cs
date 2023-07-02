@@ -32,7 +32,6 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         Move();
-        
     }
 
     public void Move()
@@ -51,6 +50,5 @@ public class PlayerController : MonoBehaviour
         }
 
     }
-    
 
 }
