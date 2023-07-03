@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     //这是一段中文注释
     //THIS IS A PIECE OF FUCKING TEXT
     /*
+     * 我是王玉才的狗
      * I LOVE BUG
      * 我爱漏洞
      */
