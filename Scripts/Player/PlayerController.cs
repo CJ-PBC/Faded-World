@@ -13,7 +13,13 @@ public class PlayerController : MonoBehaviour
 {
     [Header("物理")]
     public Rigidbody2D rb;
-    public float speed=4f;
+    public float speed;
+    public float jumpForce,jumpDur,jumpDurLeft;
+    public bool isJump;
+
+    [Header("碰撞")]
+    public Collider2D collBottom, collMain;
+    public LayerMask ground;
 
     //这是一段中文注释
     //THIS IS A PIECE OF FUCKING TEXT
@@ -30,9 +36,17 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
-    void Update()
+    //以既定频率执行的
+    void FixedUpdate()
     {
         Move();
+        Jump();
+    }
+
+    //以实际帧率执行的
+    void Update()
+    {
+        
     }
 
     public void Move()
@@ -40,16 +54,36 @@ public class PlayerController : MonoBehaviour
         float hori=Input.GetAxis("Horizontal"),
               face= Input.GetAxisRaw("Horizontal");
 
+        //速度
         if (hori != 0)
         {
             rb.velocity = new Vector2(speed * hori, rb.velocity.y);
         }
-         
+        //朝向
         if (face != 0)
         {
             transform.localScale = new Vector3(face, transform.localScale.y, transform.localScale.z);
         }
 
+    }
+
+    public void Jump()
+    {
+        isJump = Input.GetButton("Jump");
+
+        if (isJump && jumpDurLeft>0)
+        {
+            rb.velocity = new Vector2(rb.velocity.x,jumpForce);
+            jumpDurLeft -= 0.1f;
+        }
+        else if (collBottom.IsTouchingLayers(ground))
+        {
+            jumpDurLeft = jumpDur;
+        }
+        else
+        {
+            jumpDurLeft = 0f;
+        }
     }
 
 }
